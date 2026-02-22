@@ -55,6 +55,15 @@ RUN apt-get update \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
+# Copy local .deb file(s) into the image
+COPY ./*.deb /tmp/
+
+# Install local .deb package(s)
+RUN apt-get update \
+ && apt-get install -y /tmp/*.deb \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* /tmp/*.deb
+
 # This will use port 631
 EXPOSE 631
 
